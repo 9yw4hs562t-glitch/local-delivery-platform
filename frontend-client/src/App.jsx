@@ -278,6 +278,18 @@ function AdminDashboard() {
     </div>
   );
 }
+/* ========== ABONNEMENT ========== */
+function Abonnement({ actif, children }) {
+  if (!actif) {
+    return (
+      <div>
+        <h2>Abonnement requis</h2>
+        <p>Veuillez contacter l’admin pour activer votre abonnement.</p>
+      </div>
+    );
+  }
+  return children;
+}
 
 /* ================= APP ================= */
 export default function App() {
