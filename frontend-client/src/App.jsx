@@ -140,6 +140,36 @@ function RestaurantDashboard() {
     </div>
   );
 }
+/* ========== LIVREUR DASHBOARD ========== */
+function LivreurDashboard() {
+  const livraison = {
+    id: 101,
+    restaurant: "Pizza Milano",
+    client: "Client 1",
+    adresse: "Centre-ville",
+    status: "En attente"
+  };
+
+  return (
+    <div>
+      <h1>Espace Livreur</h1>
+
+      <button style={{ marginBottom: 20 }}>
+        Activer disponibilité
+      </button>
+
+      <div style={{ border: "1px solid #ccc", padding: 10 }}>
+        <h3>Livraison #{livraison.id}</h3>
+        <p>Restaurant : {livraison.restaurant}</p>
+        <p>Client : {livraison.client}</p>
+        <p>Adresse : {livraison.adresse}</p>
+
+        <button>Accepter la livraison</button>
+        <button style={{ marginLeft: 10 }}>Livraison terminée</button>
+      </div>
+    </div>
+  );
+}
 
 /* ================= APP ================= */
 export default function App() {
