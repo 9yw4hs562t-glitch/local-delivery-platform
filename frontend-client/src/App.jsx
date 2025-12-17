@@ -7,7 +7,7 @@ function Home() {
   return (
     <div>
       <h1>Plateforme de livraison locale</h1>
-      <p>Autorisez la localisation pour continuer</p>
+      <p>La localisation est obligatoire pour continuer</p>
       <button onClick={() => navigate("/restaurants")}>
         Autoriser la localisation
       </button>
@@ -98,21 +98,12 @@ function Cart() {
     </div>
   );
 }
-/* ========== RESTAURANT DASHBOARD ========== */
+
+/* ================= RESTAURANT ================= */
 function RestaurantDashboard() {
   const commandes = [
-    {
-      id: 1,
-      client: "Client 1",
-      items: ["Pizza Fromage", "Boisson"],
-      status: "En attente"
-    },
-    {
-      id: 2,
-      client: "Client 2",
-      items: ["Pizza Poulet"],
-      status: "En attente"
-    }
+    { id: 1, client: "Client 1", items: ["Pizza Fromage", "Boisson"] },
+    { id: 2, client: "Client 2", items: ["Pizza Poulet"] }
   ];
 
   return (
@@ -120,175 +111,65 @@ function RestaurantDashboard() {
       <h1>Espace Restaurant</h1>
 
       {commandes.map((c) => (
-        <div
-          key={c.id}
-          style={{ border: "1px solid #ccc", margin: 10, padding: 10 }}
-        >
+        <div key={c.id} style={{ border: "1px solid #ccc", margin: 10, padding: 10 }}>
           <h3>Commande #{c.id}</h3>
           <p>Client : {c.client}</p>
-          <p>Produits :</p>
           <ul>
-            {c.items.map((i, index) => (
-              <li key={index}>{i}</li>
+            {c.items.map((i, idx) => (
+              <li key={idx}>{i}</li>
             ))}
           </ul>
-
-          <button>Accepter la commande</button>
-          <button style={{ marginLeft: 10 }}>Commande prête</button>
+          <button>Accepter</button>
+          <button style={{ marginLeft: 10 }}>Prête</button>
         </div>
       ))}
     </div>
   );
 }
-/* ========== LIVREUR DASHBOARD ========== */
-function LivreurDashboard() {
-  const livraison = {
-    id: 101,
-    restaurant: "Pizza Milano",
-    client: "Client 1",
-    adresse: "Centre-ville",
-    status: "En attente"
-  };
 
+/* ================= LIVREUR ================= */
+function LivreurDashboard() {
   return (
     <div>
       <h1>Espace Livreur</h1>
-
-      <button style={{ marginBottom: 20 }}>
-        Activer disponibilité
-      </button>
-
-      <div style={{ border: "1px solid #ccc", padding: 10 }}>
-        <h3>Livraison #{livraison.id}</h3>
-        <p>Restaurant : {livraison.restaurant}</p>
-        <p>Client : {livraison.client}</p>
-        <p>Adresse : {livraison.adresse}</p>
-
-        <button>Accepter la livraison</button>
-        <button style={{ marginLeft: 10 }}>Livraison terminée</button>
-      </div>
+      <p>Livraison disponible</p>
+      <button>Accepter livraison</button>
+      <button style={{ marginLeft: 10 }}>Livrée</button>
     </div>
   );
 }
-/* ========== ADMIN DASHBOARD ========== */
+
+/* ================= ADMIN ================= */
 function AdminDashboard() {
-  const restaurants = [
-    { id: 1, name: "Pizza Milano", abonnement: "Actif" },
-    { id: 2, name: "Fast Food City", abonnement: "Expiré" }
-  ];
-
-  const livreurs = [
-    { id: 1, name: "Livreur 1", abonnement: "Actif" },
-    { id: 2, name: "Livreur 2", abonnement: "Expiré" }
-  ];
-
   return (
     <div>
       <h1>Espace Admin</h1>
-
-      <h2>Restaurants</h2>
-      {restaurants.map((r) => (
-        <div key={r.id} style={{ border: "1px solid #ccc", margin: 5, padding: 5 }}>
-          <p>{r.name} — Abonnement : {r.abonnement}</p>
-          <button>Activer</button>
-          <button style={{ marginLeft: 5 }}>Désactiver</button>
-        </div>
-      ))}
-
-      <h2>Livreurs</h2>
-      {livreurs.map((l) => (
-        <div key={l.id} style={{ border: "1px solid #ccc", margin: 5, padding: 5 }}>
-          <p>{l.name} — Abonnement : {l.abonnement}</p>
-          <button>Activer</button>
-          <button style={{ marginLeft: 5 }}>Désactiver</button>
-        </div>
-      ))}
+      <p>Gestion restaurants et livreurs</p>
     </div>
   );
 }
-/* ========== ADMIN DASHBOARD ========== */
-function AdminDashboard() {
-  const restaurants = [
-    { id: 1, name: "Pizza Milano", abonnement: "Actif" },
-    { id: 2, name: "Fast Food City", abonnement: "Expiré" }
-  ];
 
-  const livreurs = [
-    { id: 1, name: "Livreur 1", abonnement: "Actif" },
-    { id: 2, name: "Livreur 2", abonnement: "Expiré" }
-  ];
-
-  return (
-    <div>
-      <h1>Espace Admin</h1>
-
-      <h2>Restaurants</h2>
-      {restaurants.map((r) => (
-        <div key={r.id} style={{ border: "1px solid #ccc", margin: 5, padding: 5 }}>
-          <p>{r.name} — Abonnement : {r.abonnement}</p>
-          <button>Activer</button>
-          <button style={{ marginLeft: 5 }}>Désactiver</button>
-        </div>
-      ))}
-
-      <h2>Livreurs</h2>
-      {livreurs.map((l) => (
-        <div key={l.id} style={{ border: "1px solid #ccc", margin: 5, padding: 5 }}>
-          <p>{l.name} — Abonnement : {l.abonnement}</p>
-          <button>Activer</button>
-          <button style={{ marginLeft: 5 }}>Désactiver</button>
-        </div>
-      ))}
-    </div>
-  );
-}
-/* ========== ADMIN DASHBOARD ========== */
-function AdminDashboard() {
-  const restaurants = [
-    { id: 1, name: "Pizza Milano", abonnement: "Actif" },
-    { id: 2, name: "Fast Food City", abonnement: "Expiré" }
-  ];
-
-  const livreurs = [
-    { id: 1, name: "Livreur 1", abonnement: "Actif" },
-    { id: 2, name: "Livreur 2", abonnement: "Expiré" }
-  ];
-
-  return (
-    <div>
-      <h1>Espace Admin</h1>
-
-      <h2>Restaurants</h2>
-      {restaurants.map((r) => (
-        <div key={r.id} style={{ border: "1px solid #ccc", margin: 5, padding: 5 }}>
-          <p>{r.name} — Abonnement : {r.abonnement}</p>
-          <button>Activer</button>
-          <button style={{ marginLeft: 5 }}>Désactiver</button>
-        </div>
-      ))}
-
-      <h2>Livreurs</h2>
-      {livreurs.map((l) => (
-        <div key={l.id} style={{ border: "1px solid #ccc", margin: 5, padding: 5 }}>
-          <p>{l.name} — Abonnement : {l.abonnement}</p>
-          <button>Activer</button>
-          <button style={{ marginLeft: 5 }}>Désactiver</button>
-        </div>
-      ))}
-    </div>
-  );
-}
-/* ========== ABONNEMENT ========== */
+/* ================= ABONNEMENT ================= */
 function Abonnement({ actif, children }) {
   if (!actif) {
     return (
       <div>
         <h2>Abonnement requis</h2>
-        <p>Veuillez contacter l’admin pour activer votre abonnement.</p>
+        <p>Contactez l’admin</p>
       </div>
     );
   }
   return children;
+}
+
+/* ================= LOCALISATION ================= */
+function Localisation() {
+  return (
+    <div>
+      <h2>Localisation activée</h2>
+      <p>Position : Centre-ville</p>
+    </div>
+  );
 }
 
 /* ================= APP ================= */
@@ -300,9 +181,27 @@ export default function App() {
         <Route path="/restaurants" element={<Restaurants />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/restaurant" element={<RestaurantDashboard />} />
-        <Route path="/livreur" element={<LivreurDashboard />} />
 
+        <Route
+          path="/restaurant"
+          element={
+            <Abonnement actif={true}>
+              <RestaurantDashboard />
+            </Abonnement>
+          }
+        />
+
+        <Route
+          path="/livreur"
+          element={
+            <Abonnement actif={true}>
+              <LivreurDashboard />
+            </Abonnement>
+          }
+        />
+
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/localisation" element={<Localisation />} />
       </Routes>
     </BrowserRouter>
   );
