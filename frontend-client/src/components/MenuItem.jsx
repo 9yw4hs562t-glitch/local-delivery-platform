@@ -1,0 +1,1 @@
+export default function MenuItem(){ return <div>Produit</div>; }
