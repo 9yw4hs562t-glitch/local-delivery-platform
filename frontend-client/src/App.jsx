@@ -170,6 +170,42 @@ function LivreurDashboard() {
     </div>
   );
 }
+/* ========== ADMIN DASHBOARD ========== */
+function AdminDashboard() {
+  const restaurants = [
+    { id: 1, name: "Pizza Milano", abonnement: "Actif" },
+    { id: 2, name: "Fast Food City", abonnement: "Expiré" }
+  ];
+
+  const livreurs = [
+    { id: 1, name: "Livreur 1", abonnement: "Actif" },
+    { id: 2, name: "Livreur 2", abonnement: "Expiré" }
+  ];
+
+  return (
+    <div>
+      <h1>Espace Admin</h1>
+
+      <h2>Restaurants</h2>
+      {restaurants.map((r) => (
+        <div key={r.id} style={{ border: "1px solid #ccc", margin: 5, padding: 5 }}>
+          <p>{r.name} — Abonnement : {r.abonnement}</p>
+          <button>Activer</button>
+          <button style={{ marginLeft: 5 }}>Désactiver</button>
+        </div>
+      ))}
+
+      <h2>Livreurs</h2>
+      {livreurs.map((l) => (
+        <div key={l.id} style={{ border: "1px solid #ccc", margin: 5, padding: 5 }}>
+          <p>{l.name} — Abonnement : {l.abonnement}</p>
+          <button>Activer</button>
+          <button style={{ marginLeft: 5 }}>Désactiver</button>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 /* ================= APP ================= */
 export default function App() {
@@ -181,6 +217,7 @@ export default function App() {
         <Route path="/menu" element={<Menu />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/restaurant" element={<RestaurantDashboard />} />
+        <Route path="/livreur" element={<LivreurDashboard />} />
 
       </Routes>
     </BrowserRouter>
