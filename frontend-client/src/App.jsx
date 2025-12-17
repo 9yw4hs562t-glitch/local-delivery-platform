@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 /* ================= HOME ================= */
 function Home() {
@@ -43,12 +44,15 @@ function Restaurants() {
 /* ================= MENU ================= */
 function Menu() {
   const navigate = useNavigate();
+  const [panier, setPanier] = useState([]);
 
   const produits = [
     { id: 1, name: "Pizza Fromage", price: 800, available: true },
     { id: 2, name: "Pizza Poulet", price: 900, available: true },
     { id: 3, name: "Pizza Viande", price: 1000, available: false }
   ];
+
+  const ajouter = (p) => setPanier([...panier, p]);
 
   return (
     <div>
@@ -60,14 +64,16 @@ function Menu() {
           <p>{p.price} DZD</p>
 
           {p.available ? (
-            <button>Ajouter au panier</button>
+            <button onClick={() => ajouter(p)}>Ajouter au panier</button>
           ) : (
             <p style={{ color: "red" }}>Non disponible</p>
           )}
         </div>
       ))}
 
-      <button onClick={() => navigate("/cart")}>Aller au panier</button>
+      <button onClick={() => navigate("/cart")}>
+        Aller au panier ({panier.length})
+      </button>
     </div>
   );
 }
@@ -101,26 +107,33 @@ function Cart() {
 
 /* ================= RESTAURANT ================= */
 function RestaurantDashboard() {
-  const commandes = [
-    { id: 1, client: "Client 1", items: ["Pizza Fromage", "Boisson"] },
-    { id: 2, client: "Client 2", items: ["Pizza Poulet"] }
-  ];
+  const [commandes, setCommandes] = useState([
+    { id: 1, client: "Client 1", status: "En attente" },
+    { id: 2, client: "Client 2", status: "En attente" }
+  ]);
+
+  const accepter = (id) =>
+    setCommandes(commandes.map(c =>
+      c.id === id ? { ...c, status: "Acceptée" } : c
+    ));
+
+  const prete = (id) =>
+    setCommandes(commandes.map(c =>
+      c.id === id ? { ...c, status: "Prête" } : c
+    ));
 
   return (
     <div>
       <h1>Espace Restaurant</h1>
 
-      {commandes.map((c) => (
+      {commandes.map(c => (
         <div key={c.id} style={{ border: "1px solid #ccc", margin: 10, padding: 10 }}>
-          <h3>Commande #{c.id}</h3>
-          <p>Client : {c.client}</p>
-          <ul>
-            {c.items.map((i, idx) => (
-              <li key={idx}>{i}</li>
-            ))}
-          </ul>
-          <button>Accepter</button>
-          <button style={{ marginLeft: 10 }}>Prête</button>
+          <p>Commande #{c.id} — {c.client}</p>
+          <p>Statut : {c.status}</p>
+          <button onClick={() => accepter(c.id)}>Accepter</button>
+          <button onClick={() => prete(c.id)} style={{ marginLeft: 10 }}>
+            Prête
+          </button>
         </div>
       ))}
     </div>
@@ -129,12 +142,16 @@ function RestaurantDashboard() {
 
 /* ================= LIVREUR ================= */
 function LivreurDashboard() {
+  const [status, setStatus] = useState("En attente");
+
   return (
     <div>
       <h1>Espace Livreur</h1>
-      <p>Livraison disponible</p>
-      <button>Accepter livraison</button>
-      <button style={{ marginLeft: 10 }}>Livrée</button>
+      <p>Statut livraison : {status}</p>
+      <button onClick={() => setStatus("En cours")}>Accepter</button>
+      <button onClick={() => setStatus("Livrée")} style={{ marginLeft: 10 }}>
+        Livrée
+      </button>
     </div>
   );
 }
@@ -144,7 +161,7 @@ function AdminDashboard() {
   return (
     <div>
       <h1>Espace Admin</h1>
-      <p>Gestion restaurants et livreurs</p>
+      <p>Gestion des restaurants et des livreurs</p>
     </div>
   );
 }
@@ -155,7 +172,7 @@ function Abonnement({ actif, children }) {
     return (
       <div>
         <h2>Abonnement requis</h2>
-        <p>Contactez l’admin</p>
+        <p>Veuillez contacter l’admin</p>
       </div>
     );
   }
