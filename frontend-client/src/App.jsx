@@ -150,6 +150,8 @@ export default function App() {
         <Route path="/restaurants" element={<Restaurants />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/restaurant" element={<RestaurantDashboard />} />
+
       </Routes>
     </BrowserRouter>
   );
