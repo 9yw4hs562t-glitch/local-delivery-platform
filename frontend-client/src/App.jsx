@@ -1,15 +1,44 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+/* ================= STYLES ================= */
+const appStyle = {
+  fontFamily: "Arial, sans-serif",
+  padding: 20,
+  maxWidth: 500,
+  margin: "auto"
+};
+
+const cardStyle = {
+  border: "1px solid #ddd",
+  borderRadius: 8,
+  padding: 15,
+  marginBottom: 15
+};
+
+const buttonStyle = {
+  padding: "10px 15px",
+  border: "none",
+  borderRadius: 5,
+  backgroundColor: "#ff4d4d",
+  color: "#fff",
+  cursor: "pointer"
+};
+
+const secondaryButton = {
+  ...buttonStyle,
+  backgroundColor: "#555",
+  marginLeft: 10
+};
+
 /* ================= HOME ================= */
 function Home() {
   const navigate = useNavigate();
-
   return (
-    <div>
+    <div style={appStyle}>
       <h1>Plateforme de livraison locale</h1>
       <p>La localisation est obligatoire pour continuer</p>
-      <button onClick={() => navigate("/restaurants")}>
+      <button style={buttonStyle} onClick={() => navigate("/restaurants")}>
         Autoriser la localisation
       </button>
     </div>
@@ -19,22 +48,22 @@ function Home() {
 /* ================= RESTAURANTS ================= */
 function Restaurants() {
   const navigate = useNavigate();
-
   const restaurants = [
     { id: 1, name: "Pizza Milano", type: "Pizzeria", distance: "0.5 km" },
     { id: 2, name: "Fast Food City", type: "Restaurant", distance: "1.2 km" }
   ];
 
   return (
-    <div>
+    <div style={appStyle}>
       <h1>Restaurants proches</h1>
-
-      {restaurants.map((r) => (
-        <div key={r.id} style={{ border: "1px solid #ccc", margin: 10, padding: 10 }}>
+      {restaurants.map(r => (
+        <div key={r.id} style={cardStyle}>
           <h3>{r.name}</h3>
           <p>{r.type}</p>
           <p>{r.distance}</p>
-          <button onClick={() => navigate("/menu")}>Voir le menu</button>
+          <button style={buttonStyle} onClick={() => navigate("/menu")}>
+            Voir le menu
+          </button>
         </div>
       ))}
     </div>
@@ -52,26 +81,30 @@ function Menu() {
     { id: 3, name: "Pizza Viande", price: 1000, available: false }
   ];
 
-  const ajouter = (p) => setPanier([...panier, p]);
-
   return (
-    <div>
+    <div style={appStyle}>
       <h1>Menu</h1>
-
-      {produits.map((p) => (
-        <div key={p.id} style={{ border: "1px solid #ccc", margin: 10, padding: 10 }}>
+      {produits.map(p => (
+        <div key={p.id} style={cardStyle}>
           <h3>{p.name}</h3>
           <p>{p.price} DZD</p>
-
           {p.available ? (
-            <button onClick={() => ajouter(p)}>Ajouter au panier</button>
+            <button
+              style={buttonStyle}
+              onClick={() => setPanier([...panier, p])}
+            >
+              Ajouter au panier
+            </button>
           ) : (
             <p style={{ color: "red" }}>Non disponible</p>
           )}
         </div>
       ))}
 
-      <button onClick={() => navigate("/cart")}>
+      <button
+        style={secondaryButton}
+        onClick={() => navigate("/cart")}
+      >
         Aller au panier ({panier.length})
       </button>
     </div>
@@ -88,19 +121,17 @@ function Cart() {
   const total = panier.reduce((s, p) => s + p.price * p.qty, 0);
 
   return (
-    <div>
+    <div style={appStyle}>
       <h1>Panier</h1>
-
-      {panier.map((p) => (
-        <div key={p.id} style={{ border: "1px solid #ccc", margin: 10, padding: 10 }}>
+      {panier.map(p => (
+        <div key={p.id} style={cardStyle}>
           <h3>{p.name}</h3>
           <p>Quantité : {p.qty}</p>
           <p>Prix : {p.price} DZD</p>
         </div>
       ))}
-
       <h2>Total : {total} DZD</h2>
-      <button>Commander</button>
+      <button style={buttonStyle}>Commander</button>
     </div>
   );
 }
@@ -112,26 +143,31 @@ function RestaurantDashboard() {
     { id: 2, client: "Client 2", status: "En attente" }
   ]);
 
-  const accepter = (id) =>
-    setCommandes(commandes.map(c =>
-      c.id === id ? { ...c, status: "Acceptée" } : c
-    ));
-
-  const prete = (id) =>
-    setCommandes(commandes.map(c =>
-      c.id === id ? { ...c, status: "Prête" } : c
-    ));
-
   return (
-    <div>
+    <div style={appStyle}>
       <h1>Espace Restaurant</h1>
-
       {commandes.map(c => (
-        <div key={c.id} style={{ border: "1px solid #ccc", margin: 10, padding: 10 }}>
+        <div key={c.id} style={cardStyle}>
           <p>Commande #{c.id} — {c.client}</p>
           <p>Statut : {c.status}</p>
-          <button onClick={() => accepter(c.id)}>Accepter</button>
-          <button onClick={() => prete(c.id)} style={{ marginLeft: 10 }}>
+          <button
+            style={buttonStyle}
+            onClick={() =>
+              setCommandes(commandes.map(x =>
+                x.id === c.id ? { ...x, status: "Acceptée" } : x
+              ))
+            }
+          >
+            Accepter
+          </button>
+          <button
+            style={secondaryButton}
+            onClick={() =>
+              setCommandes(commandes.map(x =>
+                x.id === c.id ? { ...x, status: "Prête" } : x
+              ))
+            }
+          >
             Prête
           </button>
         </div>
@@ -145,11 +181,13 @@ function LivreurDashboard() {
   const [status, setStatus] = useState("En attente");
 
   return (
-    <div>
+    <div style={appStyle}>
       <h1>Espace Livreur</h1>
       <p>Statut livraison : {status}</p>
-      <button onClick={() => setStatus("En cours")}>Accepter</button>
-      <button onClick={() => setStatus("Livrée")} style={{ marginLeft: 10 }}>
+      <button style={buttonStyle} onClick={() => setStatus("En cours")}>
+        Accepter
+      </button>
+      <button style={secondaryButton} onClick={() => setStatus("Livrée")}>
         Livrée
       </button>
     </div>
@@ -159,7 +197,7 @@ function LivreurDashboard() {
 /* ================= ADMIN ================= */
 function AdminDashboard() {
   return (
-    <div>
+    <div style={appStyle}>
       <h1>Espace Admin</h1>
       <p>Gestion des restaurants et des livreurs</p>
     </div>
@@ -170,23 +208,13 @@ function AdminDashboard() {
 function Abonnement({ actif, children }) {
   if (!actif) {
     return (
-      <div>
+      <div style={appStyle}>
         <h2>Abonnement requis</h2>
         <p>Veuillez contacter l’admin</p>
       </div>
     );
   }
   return children;
-}
-
-/* ================= LOCALISATION ================= */
-function Localisation() {
-  return (
-    <div>
-      <h2>Localisation activée</h2>
-      <p>Position : Centre-ville</p>
-    </div>
-  );
 }
 
 /* ================= APP ================= */
@@ -218,7 +246,6 @@ export default function App() {
         />
 
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/localisation" element={<Localisation />} />
       </Routes>
     </BrowserRouter>
   );
