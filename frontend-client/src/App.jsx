@@ -98,6 +98,48 @@ function Cart() {
     </div>
   );
 }
+/* ========== RESTAURANT DASHBOARD ========== */
+function RestaurantDashboard() {
+  const commandes = [
+    {
+      id: 1,
+      client: "Client 1",
+      items: ["Pizza Fromage", "Boisson"],
+      status: "En attente"
+    },
+    {
+      id: 2,
+      client: "Client 2",
+      items: ["Pizza Poulet"],
+      status: "En attente"
+    }
+  ];
+
+  return (
+    <div>
+      <h1>Espace Restaurant</h1>
+
+      {commandes.map((c) => (
+        <div
+          key={c.id}
+          style={{ border: "1px solid #ccc", margin: 10, padding: 10 }}
+        >
+          <h3>Commande #{c.id}</h3>
+          <p>Client : {c.client}</p>
+          <p>Produits :</p>
+          <ul>
+            {c.items.map((i, index) => (
+              <li key={index}>{i}</li>
+            ))}
+          </ul>
+
+          <button>Accepter la commande</button>
+          <button style={{ marginLeft: 10 }}>Commande prête</button>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 /* ================= APP ================= */
 export default function App() {
